@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: telegram-upload-bot
+    env: docker
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: OWNER_ID
+        sync: false
+      - key: UPLOAD_CHANNEL_ID
+        sync: false
+      - key: DB_CHANNEL_ID
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite:////data/database.sqlite3
+      - key: PORT
+        value: "10000"
+      - key: FORCE_CHANNELS
+        value: ""
+      - key: OPTIONAL_CHANNELS
+        value: ""
+      - key: START_MESSAGE
+        value: "Hello {username}, welcome to the bot!"
+      - key: HELP_MESSAGE
+        value: "This bot helps you save and share files with session links."
+    healthCheckPath: /health
+    dockerfilePath: ./Dockerfile
+    autoRestart: true
