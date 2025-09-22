@@ -1,19 +1,19 @@
+# Dockerfile for rendering and running the bot
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements and install
 COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copy bot code
+# copy bot
 COPY bot.py /app/bot.py
 
-# Set environment
-ENV PYTHONIOENCODING=UTF-8
-ENV LANG=C.UTF-8
+# create data dir
+RUN mkdir -p /data
+
+ENV DB_PATH=/data/database.sqlite3
+ENV JOB_DB_PATH=/data/jobs.sqlite
 ENV PORT=10000
 
-# Run bot
 CMD ["python", "bot.py"]
