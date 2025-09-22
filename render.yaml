@@ -1,30 +1,27 @@
 services:
   - type: web
-    name: telegram-upload-bot
-    env: docker
+    name: vault-bot
+    env: python
     plan: free
-    autoDeploy: true
+    buildCommand: ""
+    startCommand: python bot.py
     envVars:
       - key: BOT_TOKEN
-        sync: false
+        value: ""
+        type: secret
       - key: OWNER_ID
-        sync: false
+        value: ""
       - key: UPLOAD_CHANNEL_ID
-        sync: false
+        value: ""
       - key: DB_CHANNEL_ID
-        sync: false
-      - key: DATABASE_URL
-        value: sqlite:////data/database.sqlite3
+        value: ""
+      - key: DB_PATH
+        value: "/data/database.sqlite3"
+      - key: JOB_DB_PATH
+        value: "/data/jobs.sqlite"
       - key: PORT
         value: "10000"
-      - key: FORCE_CHANNELS
-        value: ""
-      - key: OPTIONAL_CHANNELS
-        value: ""
-      - key: START_MESSAGE
-        value: "Hello {username}, welcome to the bot!"
-      - key: HELP_MESSAGE
-        value: "This bot helps you save and share files with session links."
-    healthCheckPath: /health
-    dockerfilePath: ./Dockerfile
-    autoRestart: true
+      - key: LOG_LEVEL
+        value: "INFO"
+      - key: BROADCAST_CONCURRENCY
+        value: "12"
